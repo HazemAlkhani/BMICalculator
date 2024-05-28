@@ -1,22 +1,20 @@
 ﻿version: '3.8'
+
 services:
   frontend:
-    build:
-      context: ./bmi-calculator-frontend
-      dockerfile: Dockerfile
+    image: hazemalkhani/bmicalculator-frontend:latest
     ports:
       - "3001:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
 
   backend:
-    build:
-      context: ./BMICalculatorApi
-      dockerfile: Dockerfile
+    image: hazemalkhani/bmicalculator-backend:latest
     ports:
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=62.169.21.166;Database=bmidb;User Id=sa;Password=700170;TrustServerCertificate=True;
 
   watchtower:
     image: containrrr/watchtower
