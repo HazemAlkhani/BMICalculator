@@ -1,22 +1,22 @@
-﻿# Use the official .NET Core SDK image to build the application
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /source
-
-# Copy the csproj file and restore any dependencies
-COPY *.csproj .
-RUN dotnet restore
-
-# Copy the rest of the application code and build the application
-COPY . .
-RUN dotnet publish -c Release -o /app
-
-# Use the official ASP.NET Core runtime image to run the application
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+﻿# Use the official ASP.NET Core runtime as a parent image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-COPY --from=build /app .
-
-# Expose port 80 to the outside world
 EXPOSE 80
 
-# Set the startup command
+# Use the SDK image to build the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["BMICalculatorApi/BMICalculatorApi.csproj", "BMICalculatorApi/"]
+RUN dotnet restore "BMICalculatorApi/BMICalculatorApi.csproj"
+COPY . .
+WORKDIR "/src/BMICalculatorApi"
+RUN dotnet build "BMICalculatorApi.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "BMICalculatorApi.csproj" -c Release -o /app/publish
+
+# Final stage/image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "BMICalculatorApi.dll"]
