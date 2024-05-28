@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace BMICalculatorApi.Tests;
 
 public class UnitTest1

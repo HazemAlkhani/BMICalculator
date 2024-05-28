@@ -47,5 +47,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Ensure the application listens on port 80
-app.Run("http://0.0.0.0:80");
+app.Run();

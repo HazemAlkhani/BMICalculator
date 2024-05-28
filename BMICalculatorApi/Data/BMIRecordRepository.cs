@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace BMICalculatorApi.Data
 {
@@ -16,7 +19,7 @@ namespace BMICalculatorApi.Data
             return await _context.BMIRecords.ToListAsync();
         }
 
-        public async Task<BMIRecord?> GetRecordByIdAsync(int id)
+        public async Task<BMIRecord> GetRecordByIdAsync(int id)
         {
             return await _context.BMIRecords.FindAsync(id);
         }
@@ -29,14 +32,18 @@ namespace BMICalculatorApi.Data
 
         public async Task UpdateRecordAsync(BMIRecord record)
         {
-            _context.Entry(record).State = EntityState.Modified;
+            _context.BMIRecords.Update(record);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteRecordAsync(BMIRecord record)
+        public async Task DeleteRecordAsync(int id)
         {
-            _context.BMIRecords.Remove(record);
-            await _context.SaveChangesAsync();
+            var record = await _context.BMIRecords.FindAsync(id);
+            if (record != null)
+            {
+                _context.BMIRecords.Remove(record);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> RecordExistsAsync(int id)
@@ -45,4 +52,3 @@ namespace BMICalculatorApi.Data
         }
     }
 }
-

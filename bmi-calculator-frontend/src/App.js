@@ -78,7 +78,7 @@ function App() {
     console.log('Sending data:', data);
 
     try {
-      const response = await axios.post('http://localhost:25703/api/Bmi', data);
+      const response = await axios.post('http://localhost:25703/api/BMIRecords', data);
       console.log('Record added successfully:', response.data);
     } catch (error) {
       console.error('Error adding record:', error);
