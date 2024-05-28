@@ -1,0 +1,6 @@
+@BMICalculatorApi_HostAddress = http://localhost:5027
+
+GET {{BMICalculatorApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

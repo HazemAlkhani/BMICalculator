@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMICalculatorApi", "BMICalculatorApi\BMICalculatorApi.csproj", "{F3DA3A9F-B662-457E-AA12-B7538AC0B680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMICalculatorApi.Tests", "BMICalculatorApi.Tests\BMICalculatorApi.Tests.csproj", "{DDED3375-6D9B-44FA-9083-4C508122DDEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3DA3A9F-B662-457E-AA12-B7538AC0B680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3DA3A9F-B662-457E-AA12-B7538AC0B680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3DA3A9F-B662-457E-AA12-B7538AC0B680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3DA3A9F-B662-457E-AA12-B7538AC0B680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDED3375-6D9B-44FA-9083-4C508122DDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDED3375-6D9B-44FA-9083-4C508122DDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDED3375-6D9B-44FA-9083-4C508122DDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDED3375-6D9B-44FA-9083-4C508122DDEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
