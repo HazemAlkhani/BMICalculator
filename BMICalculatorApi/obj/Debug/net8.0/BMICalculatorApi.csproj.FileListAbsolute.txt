@@ -147,3 +147,4 @@ C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\obj\Debug\net8.0\ref
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\obj\Debug\net8.0\BMICalculatorApi.pdb
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\obj\Debug\net8.0\BMICalculatorApi.genruntimeconfig.cache
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\obj\Debug\net8.0\ref\BMICalculatorApi.dll
+C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\obj\Debug\net8.0\BMICalculatorApi.sourcelink.json

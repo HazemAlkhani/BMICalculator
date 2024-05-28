@@ -21,12 +21,13 @@ namespace BMICalculatorApi.Migrations
                     Height = table.Column<double>(type: "float", nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
                     Bmi = table.Column<double>(type: "float", nullable: false),
-                    RecordedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    RecordedDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()") // Use GETDATE() as default value
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BMIRecords", x => x.Id);
                 });
+
         }
 
         /// <inheritdoc />

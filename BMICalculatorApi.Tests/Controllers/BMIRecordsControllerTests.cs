@@ -1,6 +1,7 @@
 ﻿using Xunit;
 using Moq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using BMICalculatorApi.Controllers;
 using BMICalculatorApi.Data;
 using System.Collections.Generic;
@@ -11,12 +12,14 @@ namespace BMICalculatorApi.Tests.Controllers
     public class BmiRecordsControllerTests
     {
         private readonly Mock<IBMIRecordRepository> _mockRepo;
+        private readonly Mock<ILogger<BmiController>> _mockLogger;
         private readonly BmiController _controller;
 
         public BmiRecordsControllerTests()
         {
             _mockRepo = new Mock<IBMIRecordRepository>();
-            _controller = new BmiController(_mockRepo.Object);
+            _mockLogger = new Mock<ILogger<BmiController>>();
+            _controller = new BmiController(_mockRepo.Object, _mockLogger.Object);
         }
 
         [Fact]
