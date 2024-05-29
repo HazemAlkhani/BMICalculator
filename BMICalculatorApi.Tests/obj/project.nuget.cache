@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "+2v92CnKeNmHHHGKLb3ZnWEuPhjIyDCMWdK+fAPEbJ291jZ5NOBk5cbuC/Pv3/kgSeHRqfAVph0E/SG2QV13QQ==",
+  "dgSpecHash": "MWgVKWc+8GJJ//qpgRp/n1qldcvEYM4b1szAsjnD41yILWBHLhAwZo8ObWNtEBc7fW14shHrKkgD0S4k2kxxkw==",
   "success": true,
   "projectFilePath": "C:\\Users\\hazem\\RiderProjects\\BMICalculator\\BMICalculatorApi.Tests\\BMICalculatorApi.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hazem\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\hazem\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\hazem\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\hazem\\.nuget\\packages\\fluentassertions\\6.2.0\\fluentassertions.6.2.0.nupkg.sha512",
     "C:\\Users\\hazem\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.5\\microsoft.aspnetcore.openapi.8.0.5.nupkg.sha512",
     "C:\\Users\\hazem\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\hazem\\.nuget\\packages\\microsoft.codecoverage\\17.4.0\\microsoft.codecoverage.17.4.0.nupkg.sha512",

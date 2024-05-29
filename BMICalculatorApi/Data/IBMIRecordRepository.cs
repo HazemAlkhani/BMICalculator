@@ -6,7 +6,7 @@ namespace BMICalculatorApi.Data
     public interface IBMIRecordRepository
     {
         Task<IEnumerable<BMIRecord>> GetAllRecordsAsync();
-        Task<BMIRecord> GetRecordByIdAsync(int id);
+        Task<BMIRecord?> GetRecordByIdAsync(int id); 
         Task AddRecordAsync(BMIRecord record);
         Task UpdateRecordAsync(BMIRecord record);
         Task DeleteRecordAsync(int id);

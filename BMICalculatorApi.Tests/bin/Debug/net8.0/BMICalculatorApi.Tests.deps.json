@@ -9,6 +9,7 @@
       "BMICalculatorApi.Tests/1.0.0": {
         "dependencies": {
           "BMICalculatorApi": "1.0.0",
+          "FluentAssertions": "6.2.0",
           "Microsoft.NET.Test.Sdk": "17.4.0",
           "Moq": "4.20.70",
           "xunit": "2.8.1",
@@ -60,6 +61,17 @@
           "lib/net6.0/Castle.Core.dll": {
             "assemblyVersion": "5.0.0.0",
             "fileVersion": "5.1.1.0"
+          }
+        }
+      },
+      "FluentAssertions/6.2.0": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/FluentAssertions.dll": {
+            "assemblyVersion": "6.2.0.0",
+            "fileVersion": "6.2.0.0"
           }
         }
       },
@@ -998,6 +1010,13 @@
       "sha512": "sha512-rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
       "path": "castle.core/5.1.1",
       "hashPath": "castle.core.5.1.1.nupkg.sha512"
+    },
+    "FluentAssertions/6.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5YOZLB0Tay1bw+wEYZTAZlPThQ/Yntk1HSPJYluMd5PW/Xg9E8I1mRC03AKRsnuANBR0kYaHq0NX1fg7RgrGNA==",
+      "path": "fluentassertions/6.2.0",
+      "hashPath": "fluentassertions.6.2.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/8.0.5": {
       "type": "package",
