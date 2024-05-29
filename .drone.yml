@@ -1,0 +1,71 @@
+﻿kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: static-code-analysis-backend
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    environment:
+      SONAR_TOKEN:
+        from_secret: sonar_token
+    commands:
+      - dotnet tool install --global dotnet-sonarscanner
+      - export PATH="$PATH:/root/.dotnet/tools"
+      - dotnet sonarscanner begin /k:"easv-devops_BMICalculator_AY_Cp5LuEVvRW2O60GP3" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.login=$SONAR_TOKEN
+      - dotnet build
+      - dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+
+  - name: build-and-release
+    image: docker
+    environment:
+      DOCKER_BUILDKIT: 1
+      DOCKER_USERNAME:
+        from_secret: docker_username
+      DOCKER_PASSWORD:
+        from_secret: docker_password
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+      - docker build -t hazemalkhani/bmicalculator-frontend:latest -f bmi-calculator-frontend/Dockerfile bmi-calculator-frontend
+      - docker build -t hazemalkhani/bmicalculator-backend:latest -f BMICalculatorApi/Dockerfile BMICalculatorApi
+      - docker push hazemalkhani/bmicalculator-frontend:latest
+      - docker push hazemalkhani/bmicalculator-backend:latest
+
+  - name: deploy-to-test
+    image: appleboy/drone-ssh
+    settings:
+      host: 62.169.21.165
+      username:
+        from_secret: ssh_username
+      password:
+        from_secret: ssh_password
+      script:
+        - cd ~/bmi_calculator
+        - docker-compose -f docker-compose.yml pull
+        - docker-compose -f docker-compose.yml up -d
+
+  - name: deploy-to-production
+    image: appleboy/drone-ssh
+    settings:
+      host: 62.169.21.166
+      username:
+        from_secret: ssh_username
+      password:
+        from_secret: ssh_password
+      script:
+        - cd ~/bmi_calculator
+        - docker-compose -f docker-compose.prod.yml pull
+        - docker-compose -f docker-compose.prod.yml up -d
+
+trigger:
+  branch:
+    - main
+  event:
+    - push
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock

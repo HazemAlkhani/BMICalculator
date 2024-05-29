@@ -6,8 +6,8 @@ EXPOSE 80
 # Use the SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["BMICalculatorApi/BMICalculatorApi.csproj", "BMICalculatorApi/"]
-RUN dotnet restore "BMICalculatorApi/BMICalculatorApi.csproj"
+COPY ["BMICalculatorApi/BMICalculatorApi.csproj", "."]
+RUN dotnet restore "./BMICalculatorApi.csproj"
 COPY . .
 WORKDIR "/src/BMICalculatorApi"
 RUN dotnet build "BMICalculatorApi.csproj" -c Release -o /app/build

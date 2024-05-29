@@ -1,4 +1,6 @@
-﻿namespace BMICalculatorApi.Data
+﻿using System;
+
+namespace BMICalculatorApi.Data
 {
     public class BMIRecord
     {
