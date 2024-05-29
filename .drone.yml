@@ -33,6 +33,45 @@ steps:
       - docker push hazemalkhani/bmicalculator-frontend:latest
       - docker push hazemalkhani/bmicalculator-backend:latest
 
+  - name: unit-tests-backend
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    commands:
+      - dotnet test
+
+  - name: unit-tests-frontend
+    image: node:14
+    commands:
+      - cd bmi-calculator-frontend
+      - npm install
+      - npm test
+
+  - name: integration-tests
+    image: postman/newman
+    commands:
+      - newman run your_postman_collection.json
+
+  - name: e2e-tests
+    image: cypress/base:10
+    commands:
+      - cd bmi-calculator-frontend
+      - npm install
+      - npx cypress run
+
+  - name: performance-tests-load
+    image: loadimpact/k6
+    commands:
+      - k6 run load.js
+
+  - name: performance-tests-spike
+    image: loadimpact/k6
+    commands:
+      - k6 run spike.js
+
+  - name: performance-tests-stress
+    image: loadimpact/k6
+    commands:
+      - k6 run stress.js
+
   - name: deploy-to-test
     image: appleboy/drone-ssh
     settings:
