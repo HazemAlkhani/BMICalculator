@@ -8,8 +8,6 @@ steps:
     environment:
       SONAR_TOKEN:
         from_secret: sonar_token
-      DB_PASSWORD:
-        from_secret: db_password
     commands:
       - dotnet tool install --global dotnet-sonarscanner
       - export PATH="$PATH:/root/.dotnet/tools"
@@ -47,6 +45,7 @@ steps:
         - cd ~/bmi_calculator
         - docker-compose -f docker-compose.yml pull
         - docker-compose -f docker-compose.yml up -d
+        - export DB_PASSWORD=${DB_PASSWORD}
 
   - name: deploy-to-production
     image: appleboy/drone-ssh
@@ -60,6 +59,7 @@ steps:
         - cd ~/bmi_calculator
         - docker-compose -f docker-compose.prod.yml pull
         - docker-compose -f docker-compose.prod.yml up -d
+        - export DB_PASSWORD=${DB_PASSWORD}
 
 trigger:
   branch:
