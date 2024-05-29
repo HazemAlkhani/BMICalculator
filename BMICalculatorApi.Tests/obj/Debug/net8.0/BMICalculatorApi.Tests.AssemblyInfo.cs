@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BMICalculatorApi.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b38ad2238c9c68e21048af99ada33d2670077091")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1441c2f02f24da3aacb0ea7050dd397f9d82807f")]
 [assembly: System.Reflection.AssemblyProductAttribute("BMICalculatorApi.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BMICalculatorApi.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

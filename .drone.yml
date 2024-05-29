@@ -11,7 +11,7 @@ steps:
     commands:
       - dotnet tool install --global dotnet-sonarscanner
       - export PATH="$PATH:/root/.dotnet/tools"
-      - dotnet sonarscanner begin /k:"easv-devops_BMICalculator_AY_Cp5LuEVvRW2O60GP3" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.login=$SONAR_TOKEN
+      - dotnet sonarscanner begin /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.login=$SONAR_TOKEN
       - dotnet build
       - dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
 

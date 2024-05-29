@@ -11,3 +11,5 @@ BBMICalculatorApi/obj/Debug/net8.0/BMICalculatorApi.AssemblyInfo.cs,d\c\dc4bdf8
 NBMICalculatorApi.Tests/obj/Debug/net8.0/BMICalculatorApi.Tests.AssemblyInfo.cs,4\f\4f968adc1bbff9f36f9a83cf0d6092350c06ea39
 S
 #BMICalculatorApi.Tests/UnitTest1.cs,b\d\bdbe189ed03e14955f2d6b7fe647a75e0820cbed
+Q
+!BMICalculatorApi/appsettings.json,e\7\e72e05ff89cb35d2df8ffd98615bc844bb91903a
