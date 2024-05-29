@@ -34,7 +34,7 @@ namespace BMICalculatorApi.Tests.Controllers
             Assert.Equal(2, returnValue.Count);
         }
 
-        private List<BMIRecord> GetTestRecords()
+        private static List<BMIRecord> GetTestRecords()
         {
             return new List<BMIRecord>
             {

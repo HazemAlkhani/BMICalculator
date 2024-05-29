@@ -13,7 +13,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=db;Database=bmidb;User Id=sa;Password=your_password;TrustServerCertificate=True;
 
   db:

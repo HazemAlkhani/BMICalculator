@@ -3,9 +3,11 @@ using BMICalculatorApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Use environment variable for the connection string
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IBMIRecordRepository, BMIRecordRepository>();
 
@@ -36,6 +38,12 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "BMI Calculator API V1");
     });
 }
+else
+{
+    // Add HSTS and HTTPS Redirection for production
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
 
 // Use CORS
 app.UseCors("AllowAll");
@@ -47,4 +55,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run();  

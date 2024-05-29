@@ -99,9 +99,9 @@
               "resultFile": {
                 "uri": "file:///C:/Users/hazem/RiderProjects/BMICalculator/BMICalculatorApi/Data/BMIRecord.cs",
                 "region": {
-                  "startLine": 23,
+                  "startLine": 25,
                   "startColumn": 24,
-                  "endLine": 23,
+                  "endLine": 25,
                   "endColumn": 36
                 }
               }

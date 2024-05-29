@@ -19,7 +19,7 @@ namespace BMICalculatorApi.Data
             return await _context.BMIRecords.ToListAsync();
         }
 
-        public async Task<BMIRecord> GetRecordByIdAsync(int id)
+        public async Task<BMIRecord?> GetRecordByIdAsync(int id)
         {
             return await _context.BMIRecords.FindAsync(id);
         }

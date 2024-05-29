@@ -22,7 +22,7 @@ namespace BMICalculatorApi.Data
         public double Bmi { get; set; }
         public DateTime RecordedDate { get; set; }
 
-        private double CalculateBmi(double height, double weight)
+        private static double CalculateBmi(double height, double weight)
         {
             return weight / (height * height);
         }
