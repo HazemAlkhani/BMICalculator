@@ -4,7 +4,9 @@ using BMICalculatorApi.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Use environment variable for the connection string
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?
+                           .Replace("{DB_PASSWORD}", Environment.GetEnvironmentVariable("DB_PASSWORD")) 
+                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -55,4 +57,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();  
+app.Run();

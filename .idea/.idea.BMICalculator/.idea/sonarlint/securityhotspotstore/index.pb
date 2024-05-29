@@ -13,3 +13,7 @@ S
 #BMICalculatorApi.Tests/UnitTest1.cs,b\d\bdbe189ed03e14955f2d6b7fe647a75e0820cbed
 Q
 !BMICalculatorApi/appsettings.json,e\7\e72e05ff89cb35d2df8ffd98615bc844bb91903a
+]
+-BMICalculatorApi/appsettings.Development.json,4\e\4ea0ca1f80e638c7651fbb3e1f73e96684cb53cb
+K
+BMICalculatorApi/Program.cs,c\8\c8c8afc2ab9d0b36f222ca469bba9ede13ee9d13

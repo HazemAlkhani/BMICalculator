@@ -8,6 +8,8 @@ steps:
     environment:
       SONAR_TOKEN:
         from_secret: sonar_token
+      DB_PASSWORD:
+        from_secret: db_password
     commands:
       - dotnet tool install --global dotnet-sonarscanner
       - export PATH="$PATH:/root/.dotnet/tools"
