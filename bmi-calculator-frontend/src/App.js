@@ -78,7 +78,7 @@ function App() {
     console.log('Sending data:', data);
 
     try {
-      const response = await axios.post('http://localhost:5027/api/BMIRecords', data);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/BMIRecords`, data);
       console.log('Record added successfully:', response.data);
     } catch (error) {
       console.error('Error adding record:', error);

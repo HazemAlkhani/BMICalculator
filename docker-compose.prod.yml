@@ -14,7 +14,7 @@ services:
       - "8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=db;Database=bmidb;User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;
+      - DB_PASSWORD=${DB_PASSWORD}
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -32,6 +32,7 @@ services:
       - "9000:9000"
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+      - SONAR_TOKEN=${SONARQUBE_TOKEN}
     volumes:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions

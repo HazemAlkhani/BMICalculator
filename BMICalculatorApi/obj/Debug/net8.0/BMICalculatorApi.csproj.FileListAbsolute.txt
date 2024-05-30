@@ -2,6 +2,8 @@ C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\tes
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\testhost.exe
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\appsettings.json
+C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\appsettings.Production.json
+C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\appsettings.Test.json
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\xunit.runner.visualstudio.testadapter.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll
@@ -13,6 +15,7 @@ C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\BMI
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\DotNetEnv.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Humanizer.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -53,6 +56,7 @@ C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\MyS
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\NuGet.Frameworks.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Sprache.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\hazem\RiderProjects\BMICalculator\BMICalculatorApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll

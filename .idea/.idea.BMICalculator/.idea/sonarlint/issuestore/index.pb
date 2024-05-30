@@ -17,3 +17,21 @@ Q
 -BMICalculatorApi/appsettings.Development.json,4\e\4ea0ca1f80e638c7651fbb3e1f73e96684cb53cb
 K
 BMICalculatorApi/Program.cs,c\8\c8c8afc2ab9d0b36f222ca469bba9ede13ee9d13
+X
+(BMICalculatorApi/BMICalculatorApi.csproj,5\f\5f0082aec4e12e81e0cbbdaf70ae33423e57406d
+N
+BMICalculatorApi/tests/load.js,3\d\3d75fab58b11799f10f2e04495884df56e9c0928
+d
+4BMICalculatorApi/Controllers/BMIRecordsController.cs,5\c\5c36104add6bcda157368a6211b9502eb2a5613d
+\
+,BMICalculatorApi/appsettings.Production.json,9\f\9fe40bacb8fbd56c6fb999db9ccd22133977d7f0
+V
+&BMICalculatorApi/appsettings.Test.json,2\8\2835f4ded0b315b791738e9f4f7a5ac2cb552847
+“
+c.nuget/packages/microsoft.net.test.sdk/17.4.0/build/netcoreapp3.1/Microsoft.NET.Test.Sdk.Program.cs,7\1\71707b17385432d91b5ebeb569948f428c92cc42
+K
+BMICalculatorApi/Dockerfile,4\4\4403ebc200554740ef9eda477537818c16830494
+J
+BMICalculatorApi/.env.test,8\3\830a816718c5f60966457aca3ec01d6cf32dbe56
+P
+ BMICalculatorApi/.env.production,a\2\a25c6081f8df1d421520495a6ef70ebcf5aab519

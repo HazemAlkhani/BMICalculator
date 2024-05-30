@@ -1,9 +1,36 @@
 using Microsoft.EntityFrameworkCore;
 using BMICalculatorApi.Data;
+using DotNetEnv;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Use environment variable for the connection string
+// Determine the environment and load the corresponding .env file
+string envFile = builder.Environment.EnvironmentName switch
+{
+    "Development" => ".env",
+    "Test" => ".env.test",
+    "Production" => ".env.production",
+    _ => ".env"
+};
+
+// Load environment variables from the specified .env file
+if (File.Exists(envFile))
+{
+    Env.Load(envFile);
+}
+else
+{
+    throw new FileNotFoundException($"The environment file '{envFile}' was not found.");
+}
+
+// Load environment-specific appsettings
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?
                            .Replace("{DB_PASSWORD}", Environment.GetEnvironmentVariable("DB_PASSWORD")) 
                        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

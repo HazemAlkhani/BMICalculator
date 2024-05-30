@@ -12,8 +12,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env REACT_APP_API_URL=http://62.169.21.165:8080 react-scripts start",
+    "build": "cross-env REACT_APP_API_URL=http://62.169.21.166:8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "cypress": "^13.10.0",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "cross-env": "^7.0.3"
   }
 }
