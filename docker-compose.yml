@@ -24,7 +24,7 @@ services:
       - DB_PORT=1433
       - DB_USER=sa
       - REACT_APP_API_URL=http://62.169.21.165:8080
-      - DB_PASSWORD=700170  # Ensure this is the correct way to provide the DB password
+      - DB_PASSWORD=700170 
     depends_on:
       - db
 
@@ -34,7 +34,7 @@ services:
       - "1433:1433"
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=700170  # Ensure this matches your setup
+      - SA_PASSWORD=700170  
 
   sonarqube:
     image: sonarqube:latest

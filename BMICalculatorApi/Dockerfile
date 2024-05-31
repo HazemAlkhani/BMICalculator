@@ -8,6 +8,7 @@ RUN dotnet restore "BMICalculatorApi.csproj"
 
 # Copy the rest of the application
 COPY . .
+WORKDIR /src
 RUN dotnet build "BMICalculatorApi.csproj" -c Release -o /app/build
 
 # Use the official ASP.NET Core runtime image as the runtime environment
@@ -15,9 +16,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 # Copy the environment file to the runtime image
-COPY .env.test .
+COPY .env.production .
 
 # Copy the build output to the runtime image
 COPY --from=build /app/build .
-
 ENTRYPOINT ["dotnet", "BMICalculatorApi.dll"]
