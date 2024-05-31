@@ -6,10 +6,14 @@ EXPOSE 80
 # Use the SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["BMICalculatorApi/BMICalculatorApi.csproj", "BMICalculatorApi/"]
-RUN dotnet restore "BMICalculatorApi/BMICalculatorApi.csproj"
-COPY . .
-WORKDIR "/src/BMICalculatorApi"
+
+# Copy the project file and restore the dependencies
+COPY BMICalculatorApi/BMICalculatorApi.csproj ./BMICalculatorApi/
+RUN dotnet restore "./BMICalculatorApi/BMICalculatorApi.csproj"
+
+# Copy the rest of the application
+COPY BMICalculatorApi/. ./BMICalculatorApi/
+WORKDIR /src/BMICalculatorApi
 RUN dotnet build "BMICalculatorApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -19,9 +23,10 @@ RUN dotnet publish "BMICalculatorApi.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY /BMICalculatorApi/appsettings*.json ./
-COPY /BMICalculatorApi/.env ./
-COPY /BMICalculatorApi/.env.test ./
-COPY /BMICalculatorApi/.env.production ./
+COPY BMICalculatorApi/appsettings*.json ./
+
+# Environment variables
+ENV ASPNETCORE_URLS=http://+:80
+ENV ASPNETCORE_ENVIRONMENT=Production
 
 ENTRYPOINT ["dotnet", "BMICalculatorApi.dll"]

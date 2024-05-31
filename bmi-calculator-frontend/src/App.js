@@ -57,58 +57,63 @@ const Result = styled.div`
 `;
 
 function App() {
-  const [name, setName] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [bmi, setBmi] = useState(null);
+    const [name, setName] = useState('');
+    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState('');
+    const [bmi, setBmi] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const heightInMeters = height / 100;
-    const calculatedBmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
-    setBmi(calculatedBmi);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const heightInMeters = height / 100;
+        const calculatedBmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+        setBmi(calculatedBmi);
 
-    const data = {
-      name,
-      height: heightInMeters,
-      weight,
-      bmi: calculatedBmi
+        const data = {
+            name,
+            height: heightInMeters,
+            weight,
+            bmi: calculatedBmi,
+        };
+
+        console.log('API URL:', process.env.REACT_APP_API_URL);
+        console.log('Sending data:', data);
+
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/BMIRecords`, data);
+            console.log('Record added successfully:', response.data);
+            alert('Record added successfully!');
+        } catch (error) {
+            console.error('Error adding record:', error);
+            if (error.response) {
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+                console.error('Response headers:', error.response.headers);
+                alert(`Error: ${error.response.data.message}`);
+            } else if (error.request) {
+                console.error('Request data:', error.request);
+                alert('Network error: Could not reach the server. Please try again later.');
+            } else {
+                console.error('Error message:', error.message);
+                alert(`Error: ${error.message}`);
+            }
+        }
     };
 
-    console.log('Sending data:', data);
-
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/BMIRecords`, data);
-      console.log('Record added successfully:', response.data);
-    } catch (error) {
-      console.error('Error adding record:', error);
-      if (error.response) {
-        console.error('Response data:', error.response.data);
-        console.error('Response status:', error.response.status);
-        console.error('Response headers:', error.response.headers);
-      } else if (error.request) {
-        console.error('Request data:', error.request);
-      } else {
-        console.error('Error message:', error.message);
-      }
-    }
-  };
-
-  return (
-      <Container>
-        <Title>BMI Calculator</Title>
-        <Form onSubmit={handleSubmit}>
-          <Label>Name</Label>
-          <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-          <Label>Height (cm)</Label>
-          <Input type="number" value={height} onChange={(e) => setHeight(e.target.value)} required />
-          <Label>Weight (kg)</Label>
-          <Input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} required />
-          <Button type="submit">Add Record</Button>
-        </Form>
-        {bmi && <Result>Your BMI is: {bmi}</Result>}
-      </Container>
-  );
+    return (
+        <Container>
+            <Title>BMI Calculator</Title>
+            <Form onSubmit={handleSubmit}>
+                <Label>Name</Label>
+                <Input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                <Label>Height (cm)</Label>
+                <Input type="number" value={height} onChange={(e) => setHeight(e.target.value)} required />
+                <Label>Weight (kg)</Label>
+                <Input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} required />
+                <Button type="submit">Add Record</Button>
+            </Form>
+            {bmi && <Result>Your BMI is: {bmi}</Result>}
+        </Container>
+    );
 }
 
 export default App;

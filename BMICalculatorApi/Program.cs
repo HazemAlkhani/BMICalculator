@@ -5,28 +5,44 @@ using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Manually set the root directory of the solution
+string solutionRootDirectory = @"C:\Users\hazem\RiderProjects\BMICalculator";
+
+// Determine the project directory for BMICalculatorApi
+string projectDirectory = Path.Combine(solutionRootDirectory, "BMICalculatorApi");
+
 // Determine the environment and load the corresponding .env file
 string envFile = builder.Environment.EnvironmentName switch
 {
-    "Development" => ".env",
+    "Development" => ".env.development",
     "Test" => ".env.test",
     "Production" => ".env.production",
     _ => ".env"
 };
 
+// Ensure the file path is correctly resolved relative to the solution root directory
+string envFilePath = Path.Combine(solutionRootDirectory, envFile);
+
+// Debugging output
+Console.WriteLine($"Solution Root Directory: {solutionRootDirectory}");
+Console.WriteLine($"Project Directory: {projectDirectory}");
+Console.WriteLine($"Environment File Path: {envFilePath}");
+
 // Load environment variables from the specified .env file
-if (File.Exists(envFile))
+if (File.Exists(envFilePath))
 {
-    Env.Load(envFile);
+    Env.Load(envFilePath);
+    Console.WriteLine("Environment file loaded successfully.");
 }
 else
 {
-    throw new FileNotFoundException($"The environment file '{envFile}' was not found.");
+    Console.WriteLine($"The environment file '{envFilePath}' was not found.");
+    throw new FileNotFoundException($"The environment file '{envFilePath}' was not found.");
 }
 
 // Load environment-specific appsettings
 builder.Configuration
-    .SetBasePath(Directory.GetCurrentDirectory())
+    .SetBasePath(projectDirectory)  // Use project directory for appsettings.json
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
@@ -79,7 +95,7 @@ app.UseCors("AllowAll");
 
 app.UseRouting();
 
-app.UseAuthentication(); // If you have authentication
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();

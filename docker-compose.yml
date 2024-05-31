@@ -2,25 +2,30 @@
 
 services:
   frontend:
-    image: hazemalkhani/bmicalculator-frontend:latest
+    build: ./bmi-calculator-frontend
     ports:
-      - "3001:3000"
+      - "3000:3000"
+    env_file:
+      - .env.development
     environment:
+      - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
 
   backend:
-    image: hazemalkhani/bmicalculator-backend:latest
+    build:
+      context: .
+      dockerfile: BMICalculatorApi/Dockerfile
     ports:
       - "8080:80"
+    env_file:
+      - .env.development
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_PASSWORD=700170
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      SA_PASSWORD: "700170"
-      ACCEPT_EULA: "Y"
+    env_file:
+      - .env.development
     ports:
       - "1433:1433"
     volumes:
