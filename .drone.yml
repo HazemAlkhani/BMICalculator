@@ -43,9 +43,8 @@ steps:
         from_secret: ssh_password
       script:
         - cd ~/bmi_calculator
-        - docker-compose -f docker-compose.yml pull
-        - docker-compose -f docker-compose.yml up -d
-        - export DB_PASSWORD=${DB_PASSWORD}
+        - docker-compose --env-file .env.development pull
+        - docker-compose --env-file .env.development up -d
 
   - name: deploy-to-production
     image: appleboy/drone-ssh
@@ -59,7 +58,6 @@ steps:
         - cd ~/bmi_calculator
         - docker-compose -f docker-compose.prod.yml pull
         - docker-compose -f docker-compose.prod.yml up -d
-        - export DB_PASSWORD=${DB_PASSWORD}
 
 trigger:
   branch:
