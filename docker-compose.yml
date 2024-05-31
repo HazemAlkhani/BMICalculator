@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=test
       - CHOKIDAR_USEPOLLING=true
       - REACT_APP_API_URL=http://62.169.21.165:8080
 
