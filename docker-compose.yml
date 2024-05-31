@@ -2,7 +2,8 @@
 
 services:
   frontend:
-    image: bmicalculator_frontend
+    build: ./bmi-calculator-frontend
+    image: bmicalculator_frontend:latest
     ports:
       - "3000:3000"
     environment:
@@ -11,7 +12,8 @@ services:
       - REACT_APP_API_URL=http://62.169.21.165:8080
 
   backend:
-    image: bmicalculator_backend
+    build: ./BMICalculatorApi
+    image: bmicalculator_backend:latest
     ports:
       - "8080:80"
     environment:
@@ -20,12 +22,11 @@ services:
       - DB_PORT=1433
       - DB_USER=sa
       - REACT_APP_API_URL=http://62.169.21.165:8080
-      - DB_PASSWORD_FILE=/run/secrets/db_password
-    secrets:
-      - db_password
-    volumes:
-      - .:/app
-    command: ["dotnet", "BMICalculatorApi.dll"]
+      # - DB_PASSWORD_FILE=/run/secrets/db_password  # Comment out for local build
+      # secrets:
+      # - db_password  # Comment out for local build
+    depends_on:
+      - db
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -33,26 +34,26 @@ services:
       - "1433:1433"
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD_FILE=/run/secrets/db_password
-    secrets:
-      - db_password
+      - SA_PASSWORD=700170  # Use plain environment variable for local build
+      # secrets:
+      # - db_password  # Comment out for local build
 
   sonarqube:
     image: sonarqube:latest
     ports:
       - "9000:9000"
     environment:
-      - SONAR_TOKEN_FILE=/run/secrets/sonar_token
-    secrets:
-      - sonar_token
+      - SONAR_TOKEN=sqp_3e82c2df837d322f4799bbcfde652f8c87e09777  # Use plain environment variable for local build
+      # secrets:
+      # - sonar_token  # Comment out for local build
 
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-secrets:
-  db_password:
-    external: true
-  sonar_token:
-    external: true
+    
+    # secrets:
+    # db_password:
+    # external: true
+    # sonar_token:
+    # external: true
