@@ -7,7 +7,7 @@ COPY BMICalculatorApi.csproj .
 RUN dotnet restore "BMICalculatorApi.csproj"
 
 # Copy the environment file
-COPY .env.test .env.test
+COPY .env.test .
 
 # Copy the rest of the application
 COPY . .
@@ -18,5 +18,5 @@ RUN dotnet build "BMICalculatorApi.csproj" -c Release -o /app/build
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 COPY --from=build /app/build .
-COPY .env.test .env.test  
+COPY .env.test .
 ENTRYPOINT ["dotnet", "BMICalculatorApi.dll"]
