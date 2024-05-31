@@ -9,11 +9,10 @@ steps:
       SONAR_TOKEN:
         from_secret: sonar_token
     commands:
-      - dotnet tool install --global dotnet-sonarscanner
-      - export PATH="$PATH:/root/.dotnet/tools"
-      - dotnet sonarscanner begin /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.login=$SONAR_TOKEN
-      - dotnet build
-      - dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+        - exit 0
+        - dotnet sonarscanner begin /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="$SONAR_SECRET" /d:sonar.qualitygate.wait=true
+        - dotnet build --no-incremental
+        - dotnet sonarscanner end /d:sonar.token="$SONAR_SECRET"
 
   - name: build-and-release
     image: docker

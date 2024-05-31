@@ -3,3 +3,17 @@ K
 BMICalculatorApi/Program.cs,c\8\c8c8afc2ab9d0b36f222ca469bba9ede13ee9d13
 K
 BMICalculatorApi/Dockerfile,4\4\4403ebc200554740ef9eda477537818c16830494
+r
+BBMICalculatorApi/obj/Debug/net8.0/BMICalculatorApi.AssemblyInfo.cs,d\c\dc4bdf84e700151cd866e86d5995bb922cbf1e7d
+~
+NBMICalculatorApi.Tests/obj/Debug/net8.0/BMICalculatorApi.Tests.AssemblyInfo.cs,4\f\4f968adc1bbff9f36f9a83cf0d6092350c06ea39
+Q
+!BMICalculatorApi/appsettings.json,e\7\e72e05ff89cb35d2df8ffd98615bc844bb91903a
+]
+-BMICalculatorApi/appsettings.Development.json,4\e\4ea0ca1f80e638c7651fbb3e1f73e96684cb53cb
+\
+,BMICalculatorApi/appsettings.Production.json,9\f\9fe40bacb8fbd56c6fb999db9ccd22133977d7f0
+V
+&BMICalculatorApi/appsettings.Test.json,2\8\2835f4ded0b315b791738e9f4f7a5ac2cb552847
+V
+&BMICalculatorApi/BMICalculatorApi.http,6\a\6ad03cc7d5142cdfb1bd82b146a88c4e6ad84b1e
