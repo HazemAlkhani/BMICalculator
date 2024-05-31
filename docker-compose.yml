@@ -2,59 +2,57 @@
 
 services:
   frontend:
-    build: ./bmi-calculator-frontend
+    image: bmicalculator_frontend
     ports:
       - "3000:3000"
-    env_file:
-      - .env.test
     environment:
-      - NODE_ENV=test
+      - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
       - REACT_APP_API_URL=http://62.169.21.165:8080
 
   backend:
-    build:
-      context: .
-      dockerfile: BMICalculatorApi/Dockerfile
+    image: bmicalculator_backend
     ports:
       - "8080:80"
-    env_file:
-      - .env.test
     environment:
       - ASPNETCORE_ENVIRONMENT=Test
+      - DB_HOST=db
+      - DB_PORT=1433
+      - DB_USER=sa
+      - REACT_APP_API_URL=http://62.169.21.165:8080
+      - DB_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_password
+    volumes:
+      - .:/app
+    command: ["dotnet", "BMICalculatorApi.dll"]
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
-    env_file:
-      - .env.test
     ports:
       - "1433:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD_FILE=/run/secrets/db_password
+    secrets:
+      - db_password
 
   sonarqube:
     image: sonarqube:latest
     ports:
       - "9000:9000"
     environment:
-      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
+      - SONAR_TOKEN_FILE=/run/secrets/sonar_token
+    secrets:
+      - sonar_token
 
   watchtower:
     image: containrrr/watchtower
-    container_name: watchtower
-    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=30
 
-volumes:
-  sqlserver_data:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_logs:
+secrets:
+  db_password:
+    external: true
+  sonar_token:
+    external: true
