@@ -17,3 +17,5 @@ V
 &BMICalculatorApi/appsettings.Test.json,2\8\2835f4ded0b315b791738e9f4f7a5ac2cb552847
 V
 &BMICalculatorApi/BMICalculatorApi.http,6\a\6ad03cc7d5142cdfb1bd82b146a88c4e6ad84b1e
+k
+;BMICalculatorApi/Migrations/20240528032542_InitialCreate.cs,7\c\7cf2e8833eae21f664e04191db40aa8d8fabe0d8
