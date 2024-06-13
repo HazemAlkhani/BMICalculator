@@ -9,6 +9,8 @@ steps:
       SONARSECRET:
         from_secret: sonar_token
     commands:
+      - dotnet tool install --global dotnet-sonarscanner
+      - export PATH="$PATH:/root/.dotnet/tools"
       - dotnet sonarscanner begin 
         /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" 
         /d:sonar.host.url="http://sonar.setgo.dk:9000" 
@@ -17,104 +19,55 @@ steps:
       - dotnet build --no-incremental
       - dotnet sonarscanner end /d:sonar.token="$SONARSECRET"
 
----
-
-kind: pipeline
-type: docker
-name: deliver
-depends_on:
-  - integration
-
-steps:
-  - name: publish-frontend
-    image: plugins/docker
-    settings:
-      username:
+  - name: build-and-release
+    image: docker
+    environment:
+      DOCKER_BUILDKIT: 1
+      DOCKER_USERNAME:
         from_secret: docker_username
-      password:
+      DOCKER_PASSWORD:
         from_secret: docker_password
-      context: bmi-calculator-frontend
-      dockerfile: bmi-calculator-frontend/Dockerfile
-      repo: hazemalkhani/bmicalculator-frontend
-      tags:
-        - staging
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+      - docker-compose -f docker-compose.yml build
+      - docker-compose -f docker-compose.yml push
 
-  - name: publish-backend
-    image: plugins/docker
+  - name: deploy-to-test
+    image: appleboy/drone-ssh
     settings:
+      host: 62.169.21.165
       username:
-        from_secret: docker_username
+        from_secret: ssh_username
       password:
-        from_secret: docker_password
-      context: BMICalculatorApi
-      dockerfile: BMICalculatorApi/Dockerfile
-      repo: hazemalkhani/bmicalculator-backend
-      tags:
-        - staging
+        from_secret: ssh_password
+      script:
+        - cd ~/bmi_calculator
+        - docker-compose -f docker-compose.yml pull
+        - docker-compose -f docker-compose.yml up -d
 
-  - name: trigger-update-test
-    image: curlimages/curl
-    commands:
-      - "curl --fail -X GET 'http://62.169.21.165:8080/v1/update' -H 'Authorization: Bearer mytoken'"
-      - sleep 10
-    depends_on:
-      - publish-frontend
-      - publish-backend
-
-  - name: end-to-end-tests
-    image: testcafe/testcafe
-    commands:
-      - testcafe chromium:headless BMICalculatorApi/tests/load.js --disable-native-automation
-    depends_on:
-      - trigger-update-test
-
-  - name: performance-tests
-    image: grafana/k6
-    commands:
-      - k6 run BMICalculatorApi/tests/load.js
-    depends_on:
-      - trigger-update-test
-
----
-
-kind: pipeline
-type: docker
-name: deploy
-depends_on:
-  - deliver
-
-steps:
-  - name: release-frontend
-    image: plugins/docker
+  - name: deploy-to-production
+    image: appleboy/drone-ssh
     settings:
+      host: 62.169.21.166
       username:
-        from_secret: docker_username
+        from_secret: ssh_username
       password:
-        from_secret: docker_password
-      context: bmi-calculator-frontend
-      dockerfile: bmi-calculator-frontend/Dockerfile
-      repo: hazemalkhani/bmicalculator-frontend
-      tags:
-        - prod
+        from_secret: ssh_password
+      script:
+        - cd ~/bmi_calculator
+        - docker-compose -f docker-compose.prod.yml pull
+        - docker-compose -f docker-compose.prod.yml up -d
 
-  - name: release-backend
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      context: BMICalculatorApi
-      dockerfile: BMICalculatorApi/Dockerfile
-      repo: hazemalkhani/bmicalculator-backend
-      tags:
-        - prod
+trigger:
+  branch:
+    - master
+  event:
+    - push
 
-  - name: trigger-update-prod
-    image: curlimages/curl
-    commands:
-      - "curl --fail -X GET 'http://62.169.21.166:8080/v1/update' -H 'Authorization: Bearer mytoken'"
-      - sleep 10
-    depends_on:
-      - release-frontend
-      - release-backend
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
