@@ -10,6 +10,8 @@ services:
     environment:
       - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   backend:
     build:
@@ -23,6 +25,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       - db
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -32,6 +36,8 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   sonarqube:
     image: sonarqube:latest
@@ -43,6 +49,8 @@ services:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   watchtower:
     image: containrrr/watchtower
