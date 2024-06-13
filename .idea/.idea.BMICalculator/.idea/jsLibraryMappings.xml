@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <excludedPredefinedLibrary name="BMICalculator/.sonarqube/out/.sonar/.sonartmp/bridge-bundle/package/node_modules/eslint-plugin-jsx-a11y/node_modules" />
+    <excludedPredefinedLibrary name="BMICalculator/.sonarqube/out/.sonar/.sonartmp/bridge-bundle/package/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/symlinked/_/node_modules" />
+    <excludedPredefinedLibrary name="BMICalculator/.sonarqube/out/.sonar/.sonartmp/bridge-bundle/package/node_modules/resolve/test/resolver/symlinked/_/node_modules" />
+    <excludedPredefinedLibrary name="BMICalculator/.sonarqube/out/.sonar/.sonartmp/bridge-bundle/package/node_modules/send/node_modules/debug/node_modules" />
+  </component>
+</project>
