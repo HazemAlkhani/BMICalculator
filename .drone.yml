@@ -11,11 +11,7 @@ steps:
     commands:
       - dotnet tool install --global dotnet-sonarscanner
       - export PATH="$PATH:/root/.dotnet/tools"
-      - dotnet sonarscanner begin 
-        /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" 
-        /d:sonar.host.url="http://sonar.setgo.dk:9000" 
-        /d:sonar.token="$SONARSECRET" 
-        /d:sonar.qualitygate.wait=true
+      - dotnet sonarscanner begin /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="$SONARSECRET" /d:sonar.qualitygate.wait=true
       - dotnet build --no-incremental
       - dotnet sonarscanner end /d:sonar.token="$SONARSECRET"
 
@@ -27,9 +23,6 @@ steps:
         from_secret: docker_username
       DOCKER_PASSWORD:
         from_secret: docker_password
-    volumes:
-      - name: docker_sock
-        path: /var/run/docker.sock
     commands:
       - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
       - docker-compose -f docker-compose.yml build
@@ -48,8 +41,25 @@ steps:
         - docker-compose -f docker-compose.yml pull
         - docker-compose -f docker-compose.yml up -d
 
+  - name: run-end-to-end-tests
+    image: testcafe/testcafe
+    commands:
+      - testcafe chromium:headless BMICalculatorApi/tests/load.js --disable-native-automation
+    depends_on:
+      - deploy-to-test
+
+  - name: run-performance-tests
+    image: grafana/k6
+    commands:
+      - k6 run BMICalculatorApi/tests/load.js
+    depends_on:
+      - deploy-to-test
+
   - name: deploy-to-production
     image: appleboy/drone-ssh
+    depends_on:
+      - run-end-to-end-tests
+      - run-performance-tests
     settings:
       host: 62.169.21.166
       username:
@@ -69,5 +79,4 @@ trigger:
 
 volumes:
   - name: docker_sock
-    host:
-      path: /var/run/docker.sock
+    temp: {}
