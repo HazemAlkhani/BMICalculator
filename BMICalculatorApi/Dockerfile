@@ -3,12 +3,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy the project file and restore dependencies
-COPY BMICalculatorApi.csproj .
-RUN dotnet restore "BMICalculatorApi.csproj"
+COPY BMICalculatorApi/BMICalculatorApi.csproj BMICalculatorApi/
+RUN dotnet restore "BMICalculatorApi/BMICalculatorApi.csproj"
 
 # Copy the rest of the application
-COPY . .
-WORKDIR /src
+COPY BMICalculatorApi/ BMICalculatorApi/
+WORKDIR /src/BMICalculatorApi
 RUN dotnet build "BMICalculatorApi.csproj" -c Release -o /app/build
 
 # Use the official ASP.NET Core runtime image as the runtime environment
