@@ -6,8 +6,9 @@ steps:
   - name: static-code-analysis-backend
     image: mcr.microsoft.com/dotnet/sdk:8.0
     environment:
-      SONAR_TOKEN:
-        from_secret: sonar_token
+      - SONAR_TOKEN=${SONAR_TOKEN}
+    secrets:
+      - sonar_token
     commands:
       - dotnet tool install --global dotnet-sonarscanner
       - export PATH="$PATH:/root/.dotnet/tools"
