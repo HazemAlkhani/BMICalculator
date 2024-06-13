@@ -23,3 +23,5 @@ h
 8BMICalculatorApi/Migrations/AppDbContextModelSnapshot.cs,0\4\041c3b5d34dd81e3d71928e9fbde602983428e39
 P
  BMICalculatorApi/.env.production,a\2\a25c6081f8df1d421520495a6ef70ebcf5aab519
+t
+DBMICalculatorApi/Migrations/20240528032542_InitialCreate.Designer.cs,e\a\ea5257d8355858b80f1306dca0412a39f552138d
