@@ -6,13 +6,13 @@ steps:
   - name: static-code-analysis-backend
     image: mcr.microsoft.com/dotnet/sdk:8.0
     environment:
-      - SONAR_TOKEN:
-          from_secret: sonar_token
+      SONAR_TOKEN:
+        from_secret: sonar_token
     commands:
       - dotnet tool install --global dotnet-sonarscanner
       - export PATH="$PATH:/root/.dotnet/tools"
-      - echo $PATH  # Debug: Print PATH
-      - echo "Sonar token: ${SONAR_TOKEN}"  # Debug: Print the SONAR_TOKEN value to check if it is set
+      - echo $PATH  
+      - echo "Sonar token: ${SONAR_TOKEN}" 
       - dotnet-sonarscanner begin /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.qualitygate.wait=true
       - dotnet build --no-incremental
       - dotnet-sonarscanner end /d:sonar.token="${SONAR_TOKEN}"
