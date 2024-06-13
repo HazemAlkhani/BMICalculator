@@ -21,3 +21,5 @@ k
 ;BMICalculatorApi/Migrations/20240528032542_InitialCreate.cs,7\c\7cf2e8833eae21f664e04191db40aa8d8fabe0d8
 h
 8BMICalculatorApi/Migrations/AppDbContextModelSnapshot.cs,0\4\041c3b5d34dd81e3d71928e9fbde602983428e39
+P
+ BMICalculatorApi/.env.production,a\2\a25c6081f8df1d421520495a6ef70ebcf5aab519
