@@ -2,51 +2,60 @@
 
 services:
   frontend:
-    build:
-      context: ./bmi-calculator-frontend
-    image: hazemalkhani/bmicalculator_frontend:latest
+    build: ./bmi-calculator-frontend
     ports:
       - "3000:80"
+    env_file:
+      - .env.production
     environment:
-      - NODE_ENV=test
+      - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_API_URL=http://backend:8080
 
   backend:
     build:
       context: .
       dockerfile: BMICalculatorApi/Dockerfile
-    image: hazemalkhani/bmicalculator_backend:latest
     ports:
       - "8080:80"
+    env_file:
+      - BMICalculatorApi/.env.production
     environment:
-      - ASPNETCORE_ENVIRONMENT=Test
-      - DB_HOST=db
-      - DB_PORT=1433
-      - DB_USER=sa
-      - REACT_APP_API_URL=http://backend:8080
-      - DB_PASSWORD=700170
+      - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       - db
-    volumes:
-      - ./.env.production:/app/.env.production # Ensure the correct path for the environment file
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    env_file:
+      - BMICalculatorApi/.env.production
     ports:
       - "1433:1433"
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=700170
-  
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
   sonarqube:
     image: sonarqube:latest
     ports:
       - "9000:9000"
     environment:
-      - SONAR_TOKEN=sqp_3e82c2df837d322f4799bbcfde652f8c87e09777
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
 
   watchtower:
     image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=30
+
+volumes:
+  sqlserver_data:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:

@@ -4,7 +4,7 @@ services:
   frontend:
     build: ./bmi-calculator-frontend
     ports:
-      - "3000:3000"
+      - "3000:80"
     env_file:
       - .env.production
     environment:
@@ -12,13 +12,17 @@ services:
       - CHOKIDAR_USEPOLLING=true
 
   backend:
-    build: ./BMICalculatorApi
+    build:
+      context: .
+      dockerfile: BMICalculatorApi/Dockerfile
     ports:
       - "8080:80"
     env_file:
       - .env.production
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - db
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -49,6 +53,8 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL=30
+      - REPO_USER=$DOCKERHUB_USERNAME
+      - REPO_PASS=$DOCKERHUB_PASSWORD
 
 volumes:
   sqlserver_data:
