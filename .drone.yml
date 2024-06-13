@@ -13,21 +13,29 @@ steps:
       - dotnet build --no-incremental
       - dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
 
-  - name: build-and-release
-    image: docker:20.10.7
-    environment:
-      DOCKER_BUILDKIT: 1
-      DOCKER_USERNAME:
+  - name: build-and-release-frontend
+    image: plugins/docker
+    settings:
+      username:
         from_secret: docker_username
-      DOCKER_PASSWORD:
+      password:
         from_secret: docker_password
-    commands:
-      - sleep 20 
-      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-      - docker build -t hazemalkhani/bmicalculator-frontend:latest -f bmi-calculator-frontend/Dockerfile bmi-calculator-frontend
-      - docker build -t hazemalkhani/bmicalculator-backend:latest -f BMICalculatorApi/Dockerfile BMICalculatorApi
-      - docker push hazemalkhani/bmicalculator-frontend:latest
-      - docker push hazemalkhani/bmicalculator-backend:latest
+      repo: hazemalkhani/bmicalculator-frontend
+      tags: latest
+      dockerfile: bmi-calculator-frontend/Dockerfile
+      context: bmi-calculator-frontend
+
+  - name: build-and-release-backend
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: hazemalkhani/bmicalculator-backend
+      tags: latest
+      dockerfile: BMICalculatorApi/Dockerfile
+      context: BMICalculatorApi
 
   - name: deploy-to-test
     image: appleboy/drone-ssh
@@ -54,11 +62,6 @@ steps:
         - cd ~/bmi_calculator
         - docker-compose -f docker-compose.prod.yml pull
         - docker-compose -f docker-compose.prod.yml up -d
-
-services:
-  - name: docker
-    image: docker:20.10.7-dind
-    privileged: true
 
 trigger:
   branch:
