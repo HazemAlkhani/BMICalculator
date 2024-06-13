@@ -6,12 +6,12 @@ services:
     ports:
       - "3000:80"
     env_file:
-      - .env.production
+      - .env
     environment:
       - NODE_ENV=production
       - CHOKIDAR_USEPOLLING=true
-    networks:
-      - bmicalculator_network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   backend:
     build:
@@ -20,24 +20,24 @@ services:
     ports:
       - "8080:80"
     env_file:
-      - .env.production
+      - .env
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
       - db
-    networks:
-      - bmicalculator_network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     env_file:
-      - .env.production
+      - .env
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
-    networks:
-      - bmicalculator_network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   sonarqube:
     image: sonarqube:latest
@@ -49,8 +49,8 @@ services:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
-    networks:
-      - bmicalculator_network
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   watchtower:
     image: containrrr/watchtower
@@ -58,18 +58,14 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - .env
     environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=30
-    networks:
-      - bmicalculator_network
+      - REPO_USER=${DOCKERHUB_USERNAME}
+      - REPO_PASS=${DOCKERHUB_PASSWORD}
 
 volumes:
   sqlserver_data:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_logs:
-
-networks:
-  bmicalculator_network:
-    external: true
