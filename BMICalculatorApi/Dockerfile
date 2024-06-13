@@ -16,7 +16,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 # Copy the environment file to the runtime image
-COPY BMICalculatorApi/.env.production .
+COPY .env.production .
 
 # Copy the build output to the runtime image
 COPY --from=build /app/build .
