@@ -4,7 +4,7 @@ name: integration
 
 steps:
   - name: code-analysis
-    image: boulundeasv/dotnet-sdk-with-java
+    image: mcr.microsoft.com/dotnet/sdk:8.0
     environment:
       SONARSECRET:
         from_secret: sonar_token
