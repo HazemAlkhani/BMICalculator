@@ -18,7 +18,7 @@ services:
     ports:
       - "8080:80"
     env_file:
-      - BMICalculatorApi/.env.production
+      - .env.production
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on:
