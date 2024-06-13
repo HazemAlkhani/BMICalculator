@@ -27,7 +27,7 @@ services:
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
     env_file:
-      - BMICalculatorApi/.env.production
+      - .env.production
     ports:
       - "1433:1433"
     volumes:
