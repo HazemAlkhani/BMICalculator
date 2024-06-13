@@ -2,5 +2,5 @@ projectKey=easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ
 serverUrl=http://sonar.setgo.dk:9000
 serverVersion=10.3.0.82913
 dashboardUrl=http://sonar.setgo.dk:9000/dashboard?id=easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ
-ceTaskId=AY_OF-qMEVvRW2O60Ge-
-ceTaskUrl=http://sonar.setgo.dk:9000/api/ce/task?id=AY_OF-qMEVvRW2O60Ge-
+ceTaskId=AZAPX4oEEVvRW2O60Ggj
+ceTaskUrl=http://sonar.setgo.dk:9000/api/ce/task?id=AZAPX4oEEVvRW2O60Ggj
