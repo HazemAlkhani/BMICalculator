@@ -1,75 +1,120 @@
 ﻿kind: pipeline
 type: docker
-name: default
+name: integration
 
 steps:
-  - name: static-code-analysis-backend
-    image: mcr.microsoft.com/dotnet/sdk:8.0
+  - name: code-analysis
+    image: boulundeasv/dotnet-sdk-with-java
     environment:
-      SONAR_TOKEN: ${SONAR_TOKEN}
-    secrets:
-      - sonar_token
+      SONARSECRET:
+        from_secret: sonar_token
     commands:
-      - dotnet tool install --global dotnet-sonarscanner
-      - export PATH="$PATH:/root/.dotnet/tools"
-      - echo $PATH  # Debug: Print PATH
-      - echo "Sonar token: ${SONAR_TOKEN}"  # Debug: Print the SONAR_TOKEN value to check if it is set (remove this in production)
-      - dotnet-sonarscanner begin /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="${SONAR_TOKEN}" /d:sonar.qualitygate.wait=true
+      - dotnet-sonarscanner begin 
+        /k:"easv-devops_BMICalculator_AY_FwQjHEVvRW2O60GSZ" 
+        /d:sonar.host.url="http://sonar.setgo.dk:9000" 
+        /d:sonar.token="$SONARSECRET" 
+        /d:sonar.qualitygate.wait=true
       - dotnet build --no-incremental
-      - dotnet-sonarscanner end /d:sonar.token="${SONAR_TOKEN}"
+      - dotnet-sonarscanner end /d:sonar.token="$SONARSECRET"
 
-  - name: build-and-release-frontend
+---
+
+kind: pipeline
+type: docker
+name: deliver
+depends_on:
+  - integration
+
+steps:
+  - name: publish-frontend
     image: plugins/docker
     settings:
       username:
         from_secret: docker_username
       password:
         from_secret: docker_password
-      repo: hazemalkhani/bmicalculator-frontend
-      tags: latest
-      dockerfile: bmi-calculator-frontend/Dockerfile
       context: bmi-calculator-frontend
+      dockerfile: bmi-calculator-frontend/Dockerfile
+      repo: hazemalkhani/bmicalculator-frontend
+      tags:
+        - staging
 
-  - name: build-and-release-backend
+  - name: publish-backend
     image: plugins/docker
     settings:
       username:
         from_secret: docker_username
       password:
         from_secret: docker_password
-      repo: hazemalkhani/bmicalculator-backend
-      tags: latest
-      dockerfile: BMICalculatorApi/Dockerfile
       context: BMICalculatorApi
+      dockerfile: BMICalculatorApi/Dockerfile
+      repo: hazemalkhani/bmicalculator-backend
+      tags:
+        - staging
 
-  - name: deploy-to-test
-    image: appleboy/drone-ssh
+  - name: trigger-update-test
+    image: curlimages/curl
+    commands:
+      - "curl --fail -X GET 'http://62.169.21.165:8080/v1/update' -H 'Authorization: Bearer mytoken'" # Update with your actual endpoint and token
+      - sleep 10
+    depends_on:
+      - publish-frontend
+      - publish-backend
+
+  - name: end-to-end-tests
+    image: testcafe/testcafe
+    commands:
+      - testcafe chromium:headless BMICalculatorApi/tests/load.js --disable-native-automation
+    depends_on:
+      - trigger-update-test
+
+  - name: performance-tests
+    image: grafana/k6
+    commands:
+      - k6 run BMICalculatorApi/tests/load.js
+    depends_on:
+      - trigger-update-test
+
+---
+
+kind: pipeline
+type: docker
+name: deploy
+depends_on:
+  - deliver
+
+steps:
+  - name: release-frontend
+    image: plugins/docker
     settings:
-      host: 62.169.21.165
       username:
-        from_secret: ssh_username
+        from_secret: docker_username
       password:
-        from_secret: ssh_password
-      script:
-        - cd ~/bmi_calculator
-        - docker-compose --env-file .env.development pull
-        - docker-compose --env-file .env.development up -d
+        from_secret: docker_password
+      context: bmi-calculator-frontend
+      dockerfile: bmi-calculator-frontend/Dockerfile
+      repo: hazemalkhani/bmicalculator-frontend
+      tags:
+        - prod
 
-  - name: deploy-to-production
-    image: appleboy/drone-ssh
+  - name: release-backend
+    image: plugins/docker
     settings:
-      host: 62.169.21.166
       username:
-        from_secret: ssh_username
+        from_secret: docker_username
       password:
-        from_secret: ssh_password
-      script:
-        - cd ~/bmi_calculator
-        - docker-compose -f docker-compose.prod.yml pull
-        - docker-compose -f docker-compose.prod.yml up -d
+        from_secret: docker_password
+      context: BMICalculatorApi
+      dockerfile: BMICalculatorApi/Dockerfile
+      repo: hazemalkhani/bmicalculator-backend
+      tags:
+        - prod
 
-trigger:
-  branch:
-    - master
-  event:
-    - push
+  - name: trigger-update-prod
+    image: curlimages/curl
+    commands:
+      - "curl --fail -X GET 'http://62.169.21.166:8080/v1/update' -H 'Authorization: Bearer mytoken'" # Update with your actual endpoint and token
+      - sleep 10
+    depends_on:
+      - release-frontend
+      - release-backend
