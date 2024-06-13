@@ -6,7 +6,7 @@ steps:
   - name: static-code-analysis-backend
     image: mcr.microsoft.com/dotnet/sdk:8.0
     environment:
-      - SONAR_TOKEN=${SONAR_TOKEN}
+      SONAR_TOKEN: ${SONAR_TOKEN}
     secrets:
       - sonar_token
     commands:
